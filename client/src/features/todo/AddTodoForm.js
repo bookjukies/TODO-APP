@@ -22,6 +22,8 @@ function AddTodoForm() {
             setContent('')
         }
     } 
+
+    const canSave = Boolean(title) && Boolean(content)
   return (
     <section> 
         <form>
@@ -42,7 +44,7 @@ function AddTodoForm() {
                     onChange={onContentChanged}
                 />
 
-            <button type="button" onClick={onSaveTodoClicked}>
+            <button type="button" disabled={!canSave} onClick={onSaveTodoClicked}>
                 Save Todo
             </button>
         </form>
