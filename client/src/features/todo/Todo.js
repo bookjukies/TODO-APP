@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllTodos, fetchTodos } from "./todoSlice";
+import { fetchTodos , deleteTodoAsync} from "./todoSlice";
 import AddTodoForm from "./AddTodoForm";
 
 function Todo() {
@@ -11,7 +11,6 @@ function Todo() {
   const error = useSelector((state) => state.todos.error);
 
   useEffect(() => {
-    // Dispatch the async thunk when the component mounts
     dispatch(fetchTodos());
   }, [dispatch]);
 
@@ -26,6 +25,9 @@ function Todo() {
   const renderedTodos = todos.map((todo) => (
     <article key={todo.id}>
       <h2>{todo.title}</h2>
+      <p>{todo.content}</p>
+      <button onClick={()=> dispatch(deleteTodoAsync(todo))}>delete</button>
+      <button>edit</button>
     </article>
   ));
 

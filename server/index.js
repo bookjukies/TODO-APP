@@ -31,7 +31,7 @@ server.get("/todos/:id", async(req, res)=>{
 
 server.post("/todos", async(req, res)=>{
     const { title, content, completed } = req.body;
-    const newTodo = { id: todos.length + 1, title, content, completed: !!completed };
+    const newTodo = { id: todos.length + 1, title, content, completed };
     todos.push(newTodo);
     res.status(201).json(newTodo);
 })

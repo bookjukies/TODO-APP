@@ -1,29 +1,43 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { todoAdded } from './todoSlice'
+import { addTodoAsync } from './todoSlice'
 
 function AddTodoForm() {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const completed = true
     const dispatch = useDispatch()
+
+    const [addRequestStatus, setAddRequestStatus] = useState('idle')
 
     //event handlers
     const onTitleChanged = e  => setTitle(e.target.value)
     const onContentChanged = e => setContent(e.target.value)
+
+    const canSave = Boolean(title) && Boolean(content) && addRequestStatus === 'idle'
     
 
     const onSaveTodoClicked = () =>{
-        if(title && content){
-            dispatch(
-                todoAdded(title, content)
-            )
-
-            setTitle('')
-            setContent('')
+        if(canSave){
+            try {
+                setAddRequestStatus('pending')
+                dispatch(
+                    addTodoAsync({title, content, completed})
+                )
+    
+                setTitle('')
+                setContent('')
+                
+            } catch (error) {
+                console.error('Failed to save the post', error)
+            } finally {
+                setAddRequestStatus('idle')
+            }
+            
         }
     } 
 
-    const canSave = Boolean(title) && Boolean(content)
+    
   return (
     <section> 
         <form>
