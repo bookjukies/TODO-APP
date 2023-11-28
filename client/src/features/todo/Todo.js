@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTodos , deleteTodoAsync} from "./todoSlice";
 import AddTodoForm from "./AddTodoForm";
+import { useNavigate } from "react-router-dom";
 
 function Todo() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const todos = useSelector((state) => state.todos.todos);
   const status = useSelector((state) => state.todos.status);
   const error = useSelector((state) => state.todos.error);
@@ -27,14 +28,13 @@ function Todo() {
       <h2>{todo.title}</h2>
       <p>{todo.content}</p>
       <button onClick={()=> dispatch(deleteTodoAsync(todo))}>delete</button>
-      <button>edit</button>
+      <button onClick={()=> navigate(`/edit/${todo.id}`)}>edit</button>
     </article>
   ));
 
   return (
     <>
       <h1>Todo App</h1>
-      {/* <a href="https://aniwave.to/updated"  target="_blank" rel="noopener noreferrer">go</a> */}
       <AddTodoForm />
       {renderedTodos}
     </>

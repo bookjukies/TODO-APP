@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const TODOS_URL = 'http://localhost:8000/todos';
@@ -15,12 +15,22 @@ export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
 })
 
 export const addTodoAsync = createAsyncThunk('todos/addTodo', async (newTodo) => {
-    const res = await axios.post('http://localhost:8000/todos', newTodo)
+    const res = await axios.post(TODOS_URL, newTodo)
     const todo = await res.data
     return todo;
   });
 
-  export const deleteTodoAsync = createAsyncThunk('todos/deleteTodo', async (todo) => {
+  export const editTodoAsync = createAsyncThunk('todos/editTodo', async (todo) => {
+    const {id} = todo
+    try {
+        const res = await axios.put(`${TODOS_URL}/${id}`, todo)
+        return res.data
+    } catch (error) {
+        return error.message;
+    }
+  });
+
+export const deleteTodoAsync = createAsyncThunk('todos/deleteTodo', async (todo) => {
     const {id} = todo
     try {
         const res = await axios.delete(`${TODOS_URL}/${id}`)

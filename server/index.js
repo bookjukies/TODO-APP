@@ -42,9 +42,21 @@ server.delete("/todos/:id", async(req, res)=>{
     res.json({ message: 'Todo deleted successfully' });
 })
 
-server.put("/update", async(req, res)=>{
-    res.send("item deleted")
-})
+server.put('/todos/:id', (req, res) => {
+    const todoId = parseInt(req.params.id);
+    const todo = todos.find(todo => todo.id === todoId);
+    const { title, content, completed } = req.body;
+  
+    if (!todo) {
+      return res.status(404).json({ error: 'Todo not found' });
+    }
+  
+   todo.completed = completed
+   todo.content = content
+   todo.title = title
+  
+    res.json(todo);
+  });
 
 server.listen(8000, ()=>{
     console.log("The app is running on port 8000");

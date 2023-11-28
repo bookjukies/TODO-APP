@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addTodoAsync } from './todoSlice'
+import './../../styles/AddTodoForm.scss'
 
 function AddTodoForm() {
     const [title, setTitle] = useState('')
@@ -39,7 +40,7 @@ function AddTodoForm() {
 
     
   return (
-    <section> 
+    <section className='inputContainer'> 
         <form>
             <label htmlFor="todoTitle">Todo Title</label>
             <input 
@@ -58,7 +59,7 @@ function AddTodoForm() {
                     onChange={onContentChanged}
                 />
 
-            <button type="button" disabled={!canSave} onClick={onSaveTodoClicked}>
+            <button type="button" disabled={!canSave} className="saveButton" onClick={onSaveTodoClicked}>
                 Save Todo
             </button>
         </form>
