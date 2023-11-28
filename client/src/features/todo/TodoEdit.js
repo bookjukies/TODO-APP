@@ -50,7 +50,7 @@ const navigate = useNavigate();
       completed: editableCompleted,
     }))
 
-    navigate('/')
+    navigate("/")
         
     } catch (error) {
         console.error('Failed to save the post', error)
